@@ -24,6 +24,6 @@ end
 
 
 python_pip "kedpm" do
-  package_name node[:kedpm][:url]
+  package_name node["kedpm"]["url"]
   action :install
 end
