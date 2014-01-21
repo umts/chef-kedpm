@@ -6,5 +6,5 @@ site 'http://community.opscode.com/api/v1'
 cookbook 'kedpm',
          path: '.'
 
-#cookbook 'kedpm-test',
-#         path: 'test/cookbooks/kedpm-test'
+# cookbook 'kedpm-test',
+#          path: 'test/cookbooks/kedpm-test'
