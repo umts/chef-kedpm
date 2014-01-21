@@ -1,27 +1,32 @@
-#!/usr/bin/env rake
+require 'bundler/setup'
 
-desc "Runs foodcritic linter"
-task :foodcritic do
-  if Gem::Version.new("1.9.2") <= Gem::Version.new(RUBY_VERSION.dup)
-    sandbox = File.join(File.dirname(__FILE__), %w{tmp foodcritic cookbook})
-    prepare_foodcritic_sandbox(sandbox)
+namespace :style do
+  require 'rubocop/rake_task'
+  desc 'Run Ruby style checks'
+  Rubocop::RakeTask.new(:ruby)
 
-    sh "foodcritic --epic-fail any #{File.dirname(sandbox)}"
-  else
-    puts "WARN: foodcritic run is skipped as Ruby #{RUBY_VERSION} is < 1.9.2."
+  require 'foodcritic'
+  desc 'Run Chef style checks'
+  FoodCritic::Rake::LintTask.new(:chef)
+end
+
+desc 'Run all style checks'
+task style: %w{style:chef style:ruby}
+
+require 'kitchen'
+desc 'Run Test Kitchen integration tests'
+task :integration do
+  Kitchen.logger = Kitchen.default_file_logger
+  Kitchen::Config.new.instances.each do |instance|
+    instance.test(:always)
   end
 end
 
-task :default => 'foodcritic'
+task default: %w{style integration}
 
-private
-
-def prepare_foodcritic_sandbox(sandbox)
-  files = %w{*.md *.rb attributes definitions files libraries providers
-recipes resources templates}
-
-  rm_rf sandbox
-  mkdir_p sandbox
-  cp_r Dir.glob("{#{files.join(',')}}"), sandbox
-  puts "\n\n"
+namespace :travis do
+  desc 'Run tests on Travis'
+  task :ci do
+    task ci: %w{style}
+  end
 end
