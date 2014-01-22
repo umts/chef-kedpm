@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
 
 group :test, :development do
-  gem "rake"
+  gem 'rake'
 end
 
 group :test do
-  gem "test-kitchen", "~> 1.1"
+  gem 'test-kitchen', '~> 1.1'
   gem 'kitchen-vagrant'
-  gem "librarian-chef"
-  gem "foodcritic", "~> 3.0"
-  gem "rubocop"
+  gem 'librarian-chef'
+  gem 'foodcritic', '~> 3.0'
+  gem 'rubocop', '~> 0.16'
 end
