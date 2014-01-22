@@ -6,6 +6,7 @@ AllCops:
     - .bundle/**
     - .kitchen/**
     - .librarian/**
+    - vendor/**
 
 Encoding:
   Enabled: false
