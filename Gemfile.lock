@@ -123,5 +123,5 @@ DEPENDENCIES
   kitchen-vagrant
   librarian-chef
   rake
-  rubocop
+  rubocop (~> 0.16)
   test-kitchen (~> 1.1)
