@@ -1,10 +1,10 @@
-require 'serverspec'
+require 'spec_helper'
 
-include Serverspec::Helper::Exec
-include Serverspec::Helper::DetectOS
-
-describe 'the KedPM binary' do
-  it 'exists' do
-    expect(command('which kedpm')).to return_stdout(/bin\/kedpm/)
+describe 'kedpm::default' do
+  describe command('pip list') do
+    its(:stdout) { should match /kedpm/ }
+  end
+  describe command('which kedpm') do
+    its(:exit_status) { should eq 0 }
   end
 end
