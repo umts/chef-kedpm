@@ -1,12 +1,8 @@
 AllCops:
-  Includes:
+  Include:
     - Rakefile
-  Excludes:
-    - tmp/**
-    - .bundle/**
-    - .kitchen/**
-    - .librarian/**
-    - vendor/**
+  Exclude:
+    - .kitchen/**/*
 
 Encoding:
   Enabled: false

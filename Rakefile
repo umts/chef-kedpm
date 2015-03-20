@@ -1,30 +1,24 @@
-require 'bundler/setup'
+require 'rubocop/rake_task'
+require 'foodcritic'
+require 'kitchen/rake_tasks'
 
 namespace :style do
-  require 'rubocop/rake_task'
   desc 'Run Ruby style checks'
-  Rubocop::RakeTask.new(:ruby)
+  RuboCop::RakeTask.new(:ruby)
 
-  require 'foodcritic'
   desc 'Run Chef style checks'
   FoodCritic::Rake::LintTask.new(:chef)
 end
 
 desc 'Run all style checks'
-task style: %w{style:chef style:ruby}
+task style: %w(style:chef style:ruby)
 
-require 'kitchen'
 desc 'Run Test Kitchen integration tests'
-task :integration do
-  Kitchen.logger = Kitchen.default_file_logger
-  Kitchen::Config.new.instances.each do |instance|
-    instance.test(:always)
-  end
-end
+Kitchen::RakeTasks.new
 
-task default: %w{style integration}
+task default: %w(style kitchen:all)
 
 namespace :travis do
   desc 'Run tests on Travis'
-  task ci: %w{style}
+  task ci: %w(style)
 end
