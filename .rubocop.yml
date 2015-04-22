@@ -8,3 +8,5 @@ Encoding:
   Enabled: false
 LineLength:
   Enabled: false
+Style/SingleSpaceBeforeFirstArg:
+  Enabled: false
